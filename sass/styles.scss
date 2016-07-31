@@ -1,0 +1,39 @@
+.board-wrapper{
+	height: 500px;
+	position: relative;
+}
+
+.board{
+	margin: 0 auto;
+	height: 100%;
+	padding: 0 20%;
+	box-sizing: border-box;
+}
+
+div[class^="row"]{
+	height: 33.3%;
+}
+
+div[class^="column"] {
+	width: 33.3%;
+	float: left;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.column-1, .column-2, .column-3{
+	font-family: "Comic Sans MS";
+	font-size: 100px;
+	line-height: 100%;
+	text-align: center;
+}
+
+.column-1, .column-2 {
+	border: solid black;
+	border-width: 0 3px 0 0;
+}
+
+.row-1, .row-2{
+	border: solid black;
+	border-width: 0 0 3px  0;
+}
