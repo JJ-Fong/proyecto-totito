@@ -34,12 +34,13 @@ function turn(casilla){
 	var control = casillas[casilla];
 	if (control === 0) { 
 		casillas[casilla] = turno;  
+		render();
 		if (turno === 1) {
 			turno = 2;
 		} else {
 			turno = 1; 
 		}
-		render();
+		
 	}
 }
 
@@ -65,7 +66,7 @@ function render()  {
 function totito(){
 	var fin = false; 
 	var [x0,x1,x2,x3,x4,x5,x6,x7,x8] = casillas;
-	
+	var ganador = "";
 	if (!fin) { fin = (x0 === x1)&&(x1 === x2)&&(x0>0)};
 	if (!fin) { fin = (x3 === x4)&&(x4 === x5)&&(x3>0)};
 	if (!fin) { fin = (x6 === x7)&&(x7 === x8)&&(x6>0)};
@@ -76,12 +77,18 @@ function totito(){
 	if (!fin) { fin = (x2 === x4)&&(x4 === x6)&&(x2>0)};
 
 	if (fin) {
+		ganador = turno; 
 		for (i = 0; i < casillas.length; i++) {
 			if (casillas[i]===0){
 				casillas[i] = 3;
 			}
 		}
-		return "JUEGO TERMINADO";
+		var mensaje = "<h1> EL GANADOR ES "+ganador+"</h1>";
+		var msg = document.getElementById("msg");
+		msg.innerHTML=mensaje;
+
+		return "JUEGO TERMINADO, EL GANADOR ES "+ganador;
+
 	} else {
 		return "SIGUE";
 	}

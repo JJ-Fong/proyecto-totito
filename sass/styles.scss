@@ -37,3 +37,11 @@ div[class^="column"] {
 	border: solid black;
 	border-width: 0 0 3px  0;
 }
+
+div[class$="msg"] {
+	text-align: center; 
+}
+
+.button-container{
+	text-align: center;
+}
