@@ -9,6 +9,7 @@ var turno = 1;
 
 var casillas = [0,0,0,0,0,0,0,0,0];
 
+var startbutton = document.getElementById("start-button");
 var casilla0 = document.getElementById("casilla-1"); 
 var casilla1 = document.getElementById("casilla-2"); 
 var casilla2 = document.getElementById("casilla-3"); 
@@ -29,6 +30,10 @@ casilla6.addEventListener("click",  function () {turn(6)});
 casilla7.addEventListener("click",  function () {turn(7)});
 casilla8.addEventListener("click",  function () {turn(8)});
 
+startbutton.addEventListener("click", function() {
+	casillas=[0,0,0,0,0,0,0,0,0];
+	render(); 
+})
 
 function turn(casilla){
 	var control = casillas[casilla];
@@ -56,6 +61,8 @@ function render()  {
 			gencasilla.innerHTML = "X";
 		} else if (state === 2) { 
 			gencasilla.innerHTML = "O";
+		} else {
+			gencasilla.innerHTML = "";
 		}
 	}
 
@@ -64,10 +71,11 @@ function render()  {
 }
 
 function totito(){
-	var fin = false; 
+	var fin = false;
+	var empate = false; 
 	var [x0,x1,x2,x3,x4,x5,x6,x7,x8] = casillas;
 	var ganador = "";
-	if (!fin) { fin = (x0 === x1)&&(x1 === x2)&&(x0>0)};
+	if (!fin) { fin = (x0 === x1)&&(x1 === x2)&&(x0>0);};
 	if (!fin) { fin = (x3 === x4)&&(x4 === x5)&&(x3>0)};
 	if (!fin) { fin = (x6 === x7)&&(x7 === x8)&&(x6>0)};
 	if (!fin) { fin = (x0 === x3)&&(x3 === x6)&&(x0>0)};
@@ -75,22 +83,40 @@ function totito(){
 	if (!fin) { fin = (x2 === x5)&&(x5 === x8)&&(x2>0)};
 	if (!fin) { fin = (x0 === x4)&&(x4 === x8)&&(x0>0)};
 	if (!fin) { fin = (x2 === x4)&&(x4 === x6)&&(x2>0)};
-
+	if (!fin) { empate = (x0>0)&&(x1>0)&&(x2>0)&&(x3>0)&&(x4>0)&&(x5>0)&&(x6>0)&&(x7>0)&&(x8>0)}
 	if (fin) {
-		ganador = turno; 
+		if (turno===1){
+			ganador = "X";
+		} else {
+			ganador = "O";
+		}
 		for (i = 0; i < casillas.length; i++) {
 			if (casillas[i]===0){
 				casillas[i] = 3;
 			}
 		}
+
 		var mensaje = "<h1> EL GANADOR ES "+ganador+"</h1>";
 		var msg = document.getElementById("msg");
 		msg.innerHTML=mensaje;
 
 		return "JUEGO TERMINADO, EL GANADOR ES "+ganador;
 
+	} else if (empate){
+		fin = true; 
+		var mensaje = "<h1> EMPATE </h1>";
+		var msg = document.getElementById("msg");
+		msg.innerHTML=mensaje;
+
+		return "JUEGO TERMINADO, EL GANADOR ES "+ganador;
+
 	} else {
+		
+		var mensaje = "<h1></h1>";
+		var msg = document.getElementById("msg");
+		msg.innerHTML=mensaje;
 		return "SIGUE";
+
 	}
 	
 }
