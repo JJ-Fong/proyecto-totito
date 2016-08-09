@@ -1,8 +1,10 @@
-.board-wrapper{
+.wrapper{
+	margin-top: 200px;
 	position: relative;
+	height: 500px;
 }
 
-.board{
+.totito{
 	margin: 0 auto;
 	height: 500px;
 	padding: 0 20%;
@@ -39,8 +41,14 @@ div[class^="column"] {
 
 div[class$="msg"] {
 	text-align: center; 
+	height: 200px;
+	line-height: 200px;
 }
 
 .button-container{
 	height: 100px;
+}
+
+.button{
+	margin: 0 auto;
 }
