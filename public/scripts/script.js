@@ -1,6 +1,7 @@
 var state = {
 	board: [[0,0,0],[0,0,0],[0,0,0]],
-	turn: 1
+	turn: 1,
+	winner: 0
 }
 
 function render(state) {
@@ -23,13 +24,24 @@ function render(state) {
 		html += '</div>\n'
 	} 
 	html += '</div>\n'
-	/*
-	AGREGAR EL CODIGO DE GANADOR O EMPATE
-	*/
+	console.log(state.winner);
+	if (state.winner > 0){
+		html += '<div class="msg">';
+		if (state.winner === 1){
+			html += '<h1>GANADOR ES X</h1>';
+		} else if (state.winner === 2){
+			html += '<h1>GANADOR ES O</h1>';
+		} else if (state.winner === 3) {
+			html += '<h1>EMPATE</h1>';
+		}
+		html += '</div>';
+		html += '<div class="button-container"><button id="button">REINICIAR</button></div>'
+	}
+
 	return html;
 }
 
-function addListeners(fin) {
+function addListeners() {
 	var casilla0 = document.getElementById("casilla-0");
 	casilla0.addEventListener("click", function() {state = turn(state, 0)});
 
@@ -57,11 +69,12 @@ function addListeners(fin) {
 	var casilla8 = document.getElementById("casilla-8");
 	casilla8.addEventListener("click", function() {state = turn(state, 8)});
 
-	if(fin) {
+	if(state.winner > 0) {
 		var button = document.getElementById("button");
 		button.addEventListener("click",function(){
 			state.board = [[0,0,0],[0,0,0],[0,0,0]],
 			state.turn = 1;
+			state.winner = 0;
 			console.log(state);
 			var viewport = document.getElementById("viewport");
 			viewport.innerHTML = render(state);
@@ -108,9 +121,30 @@ function turn(state, selected){
 	state.board[0] = [casillas[0],casillas[1],casillas[2]];
 	state.board[1] = [casillas[3],casillas[4],casillas[5]];
 	state.board[2] = [casillas[6],casillas[7],casillas[8]];
-
+	
+	if (end) {
+		state.winner = winner;
+		for(i = 0; i < board.length	; i++){
+			var row = board[i];
+			for (j = 0; j < row.length; j++){
+				var x = row[j];
+				if (x === 0){
+					row[j] = 3;
+				}
+			} 
+		} 
+	} else {
+		var itsOver = false; 
+		for (i = 0; i < casillas.length; i++){
+			itsOver = itsOver || (casillas[i] === 0); 
+		}
+		if (!itsOver) {
+			state.winner = 3;
+		}
+	}
+	
 	var viewport = document.getElementById("viewport");
-	viewport.innerHTML = render(state)+msg;
+	viewport.innerHTML = render(state);
 	addListeners(end);
 	return state
 }
@@ -118,7 +152,7 @@ function turn(state, selected){
 
 var viewport = document.getElementById("viewport");
 viewport.innerHTML = render(state);
-addListeners(false);
+addListeners();
 
 
 
